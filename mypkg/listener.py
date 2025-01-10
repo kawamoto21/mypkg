@@ -1,5 +1,8 @@
 # SPDX-FileCopyrightText: 2025 Sou Kawamoto <s23c1040mc@s.chibakoudai.jp>
 # SPDX-License-Identifier: BSD-3-Clause
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
 
 class Listener(Node):
     def __init__(self):
