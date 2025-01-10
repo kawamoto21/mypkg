@@ -18,7 +18,7 @@ setup(
     maintainer='kawamoto',
     maintainer_email='s23c1040mc@s.chibakoudai.jp',
     description='a package for practice',
-    license='BSD-3-Clause,
+    license='BSD-3-Clause',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
