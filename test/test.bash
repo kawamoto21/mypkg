@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-FileCopyrightText: 2025 Sou Kawamoto <s23c1040mc@s.chibakoudai.jp>
+# SPDX-License-Identifier: BSD-3-Clause
 
 # ホームディレクトリを変更可能にする設定
 dir=~

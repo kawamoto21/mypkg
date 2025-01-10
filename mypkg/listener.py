@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025 Sou Kawamoto <s23c1040mc@s.chibakoudai.jp>
+# SPDX-License-Identifier: BSD-3-Clause
+
 class Listener(Node):
     def __init__(self):
         super().__init__('listener')

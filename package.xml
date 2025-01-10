@@ -3,7 +3,11 @@
 <package format="3">
   <name>mypkg</name>
   <version>0.0.0</version>
-  <description>a package for practice</description>
+  <description>Use two terminals.
+
+    1. In one terminal, run `$ ros2 run mypkg talker`
+    2. In the other terminal, run `$ ros2 run mypkg listener`
+    * To stop, press `Ctrl + C`    </description>
   <maintainer email="s23c1040mc@s.chibakoudai.jp">kawamoto</maintainer>
   <license>BSD-3-Clause</license>
   <exec_depend>rclpy</exec_depend>
