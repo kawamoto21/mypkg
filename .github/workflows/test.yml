@@ -22,6 +22,7 @@ jobs:
 
       # 必要な依存関係のインストール
       - name: Install dependencies
+        shell: bash  # シェルを bash に指定
         run: |
           apt-get update && apt-get install -y python3-rosdep
           if [ -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
@@ -33,6 +34,7 @@ jobs:
 
       # ROS 2 ワークスペースのビルド
       - name: Build workspace
+        shell: bash  # シェルを bash に指定
         run: |
           cd /root/ros2_ws
           source /opt/ros/humble/setup.bash
@@ -40,6 +42,7 @@ jobs:
 
       # テストスクリプトの実行
       - name: Run tests
+        shell: bash  # シェルを bash に指定
         run: |
           cd /root/ros2_ws
           source install/setup.bash
