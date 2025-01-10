@@ -19,6 +19,8 @@ jobs:
         run: |
           mkdir -p /root/ros2_ws/src
           rsync -av ./ /root/ros2_ws/src/mypkg/
+          echo "Workspace structure:"
+          ls -R /root/ros2_ws/src
 
       # 必要な依存関係のインストール
       - name: Install dependencies
@@ -26,6 +28,37 @@ jobs:
         run: |
           apt-get update && apt-get install -y python3-rosdep
           if [ -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+            echo "Removing existing rosdep sources list..."
             rm /etc/ros/rosdep/sources.list.d/20-default.list
           fi
           rosdep init
+          rosdep update
+          rosdep install --from-paths /root/ros2_ws/src --ignore-src -r -y
+
+      # ビルドとテストの実行
+      - name: Build and test
+        shell: bash  # シェルを bash に指定
+        run: |
+          source /opt/ros/humble/setup.bash
+          cd /root/ros2_ws
+          colcon build
+          colcon test
+          colcon test-result --verbose
+
+      # ノードの実行確認
+      - name: Run nodes
+        shell: bash  # シェルを bash に指定
+        run: |
+          python3 /root/ros2_ws/src/mypkg/talker.py &
+          TALKER_PID=$!
+          sleep 2
+          python3 /root/ros2_ws/src/mypkg/listener.py
+          RESULT=$?
+          if [ $RESULT -ne 0 ]; then
+            echo "ノード実行に失敗しました"
+            kill $TALKER_PID
+            exit 1
+          fi
+          echo "ノードが正常に動作しました"
+          kill $TALKER_PID
+
