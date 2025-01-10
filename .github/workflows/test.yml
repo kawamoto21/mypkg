@@ -1,5 +1,6 @@
 name: test
-on: 
+
+on:
   push:
     branches:
       - main  # 必要なブランチを指定
@@ -23,14 +24,24 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update && apt-get install -y python3-rosdep
+          if [ -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+            rm /etc/ros/rosdep/sources.list.d/20-default.list
+          fi
           rosdep init
           rosdep update
           rosdep install --from-paths /root/ros2_ws/src --ignore-src -r -y
 
-      # ビルドとテストの実行
-      - name: Build and test
+      # ROS 2 ワークスペースのビルド
+      - name: Build workspace
         run: |
           cd /root/ros2_ws
+          source /opt/ros/humble/setup.bash
           colcon build
+
+      # テストスクリプトの実行
+      - name: Run tests
+        run: |
+          cd /root/ros2_ws
+          source install/setup.bash
           bash -xv ./src/mypkg/test/test.bash /root
 
